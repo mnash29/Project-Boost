@@ -129,6 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainThrust: 1000
   rotationThrust: 100
+  mainEngineClip: {fileID: 8300000, guid: a2f1101d4f0748145bac78b71a5df03f, type: 3}
 --- !u!82 &2010504673
 AudioSource:
   m_ObjectHideFlags: 0
@@ -139,7 +140,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a2f1101d4f0748145bac78b71a5df03f, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -237,3 +238,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 104ea98e30101734d9cddbf518ef9e3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invokeDelay: 1
+  collisionClip: {fileID: 8300000, guid: 8ded1bda0ce317d4ab52df14cf629789, type: 3}
+  successClip: {fileID: 8300000, guid: fca22cf55a6f3f94a96b60aec11708e7, type: 3}

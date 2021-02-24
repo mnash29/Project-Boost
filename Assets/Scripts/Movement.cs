@@ -2,10 +2,12 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    Rigidbody rb;
-    AudioSource audioSource;
     [SerializeField] float mainThrust = 1000f;
     [SerializeField] float rotationThrust = 100f;
+    [SerializeField] AudioClip mainEngineClip;
+
+    Rigidbody rb;
+    AudioSource audioSource;
 
     void Start() {
         rb = GetComponent<Rigidbody>();
@@ -22,12 +24,15 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            PlayAudioSource();
+            if (!audioSource.isPlaying)
+            {
+                audioSource.PlayOneShot(mainEngineClip);
+            }
             rb.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
         }
-        else
+        else if (audioSource.isPlaying)
         {
-            StopAudioSource();
+            audioSource.Stop();
         }
     }
 
@@ -49,21 +54,5 @@ public class Movement : MonoBehaviour
         rb.freezeRotation = true; // Freezing rotation to fix physics bug
         transform.Rotate(Vector3.forward * direction * Time.deltaTime);
         rb.freezeRotation = false;
-    }
-
-    void PlayAudioSource()
-    {
-        if (!audioSource.isPlaying)
-        {
-            audioSource.Play();
-        }
-    }
-
-    void StopAudioSource()
-    {
-        if (audioSource.isPlaying)
-        {
-            audioSource.Stop();
-        }
     }
 }
