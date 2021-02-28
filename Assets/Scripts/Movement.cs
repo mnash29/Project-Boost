@@ -27,38 +27,68 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            if (!audioSource.isPlaying)
-            {
-                audioSource.PlayOneShot(mainEngineClip);
-                mainBoosterParticle.Play();
-            }
-            rb.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
+            StartThrusting();
         }
-        else if (audioSource.isPlaying)
+        else
         {
-            audioSource.Stop();
-            mainBoosterParticle.Stop();
+            StopThrusting();
         }
     }
-
     void ProcessRotation()
     {
         if (Input.GetKey(KeyCode.A))
         {
-            rightThrusterParticle.Play();
-            ApplyRotation(rotationThrust);
+            StartRightThruster();
         }
 
         else if (Input.GetKey(KeyCode.D))
         {
-            leftThrusterParticle.Play();
-            ApplyRotation(-rotationThrust);
+            StartLeftThruster();
         }
         else
         {
-            rightThrusterParticle.Stop();
-            leftThrusterParticle.Stop();
+            StopSideThrusters();
         }
+    }
+
+    void StartThrusting()
+    {
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(mainEngineClip);
+            mainBoosterParticle.Play();
+        }
+        rb.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
+    }
+
+    void StopThrusting()
+    {
+        audioSource.Stop();
+        mainBoosterParticle.Stop();
+    }
+
+    void StartRightThruster()
+    {
+        ApplyRotation(rotationThrust);
+        if (!rightThrusterParticle.isPlaying)
+        {
+            rightThrusterParticle.Play();
+        }
+    }
+
+    void StartLeftThruster()
+    {
+        ApplyRotation(-rotationThrust);
+        if (!leftThrusterParticle.isPlaying)
+        {
+            leftThrusterParticle.Play();
+        }
+    }
+
+    void StopSideThrusters()
+    {
+        rightThrusterParticle.Stop();
+        leftThrusterParticle.Stop();
     }
 
     void ApplyRotation(float direction)

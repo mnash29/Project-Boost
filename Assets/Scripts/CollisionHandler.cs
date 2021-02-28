@@ -4,24 +4,44 @@ using UnityEngine.SceneManagement;
 public class CollisionHandler : MonoBehaviour
 {
     [SerializeField] float invokeDelay = 1f;
+    [SerializeField] bool isCollisionDisabled = false;
     [SerializeField] AudioClip collisionClip;
     [SerializeField] AudioClip successClip;
-
     [SerializeField] ParticleSystem crashParticles;
     [SerializeField] ParticleSystem successParticles;
 
     AudioSource audioSource;
+    BoxCollider boxCollider;
 
     bool isTransitioning = false;
 
     void Start() 
     {
         audioSource = GetComponent<AudioSource>();
+        boxCollider = GetComponent<BoxCollider>();
+    }
+
+    void Update() 
+    {
+        handleDebugKeys();    
+    }
+
+    void handleDebugKeys()
+    {
+        if (Input.GetKey(KeyCode.L))
+        {
+            LoadNextLevel();
+        }
+
+        if (Input.GetKey(KeyCode.C))
+        {
+            isCollisionDisabled = !isCollisionDisabled;
+        }
     }
 
     void OnCollisionEnter(Collision other)
     {
-        if (isTransitioning) return;
+        if (isTransitioning || isCollisionDisabled) return;
 
         switch (other.gameObject.tag)
         {
